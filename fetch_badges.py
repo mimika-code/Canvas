@@ -25,15 +25,17 @@ def update_badge_data():
         data = fetch_data(QUERY_ID, offset)
         if data and 'result' in data and data['result']['rows']:
             for row in data['result']['rows']:
-                badge_name = row['badge_name'] 
-                total_minted = row['total_minted']
+                badge_name = row.get('badge_name', 'unknown')
+                total_minted = row.get('total_minted', 0)
                 badge_info[badge_name] = total_minted
             offset += RESULTS_PER_PAGE
         else:
+            print("Error: No data returned from Dune API or invalid data structure.")
+            print(data)
             break
 
     with open("badge_data.json", "w") as f:
-        json.dump(badge_info, f, separators=(',', ':'))  
+        json.dump(badge_info, f, separators=(',', ':'))
 
     print("badge_data.json updated successfully with content:", badge_info)
 
