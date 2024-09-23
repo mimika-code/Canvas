@@ -3133,23 +3133,7 @@ a[href="https://dune.com/mimika/scrl-bgds"]:hover {
 
     </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        fetch('./badge_data.json')
-            .then(response => response.json())
-            .then(data => {
-                document.querySelectorAll('.badge-item-new').forEach(item => {
-                    const badgeId = item.dataset.badgeId;
-                    if (data.hasOwnProperty(badgeId)) {
-                        item.querySelector('.mint-info-new').innerText = `Total Minted: ${data[badgeId]}`;
-                    } else {
-                        item.querySelector('.mint-info-new').innerText = 'Total Minted: 0';
-                    }
-                });
-            })
-            .catch(error => console.error('Error loading badge_data.json:', error));
-    });
-</script>
+
 
 
 
@@ -4661,6 +4645,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     observer.observe(document.body, { attributes: true, childList: true, subtree: true });
+
+    fetch('./badge_data.json')
+        .then(response => response.json())
+        .then(data => {
+            document.querySelectorAll('.badge-item-new').forEach(item => {
+                const badgeId = item.dataset.badgeId;
+                if (data.hasOwnProperty(badgeId)) {
+                    item.querySelector('.mint-info-new').innerText = `Total Minted: ${data[badgeId]}`;
+                } else {
+                    item.querySelector('.mint-info-new').innerText = 'Total Minted: 0';
+                }
+            });
+        })
+        .catch(error => console.error('Error loading badge_data.json:', error));
+
 });
         
 </script>
