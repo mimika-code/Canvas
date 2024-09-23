@@ -24,11 +24,15 @@ jobs:
         python -m pip install --upgrade pip
         pip install dune-client
 
+    - name: Create empty badge_data.json
+      run: echo '{}' > badge_data.json
+
     - name: Fetch data from Dune
       env:
         DUNE_API_KEY: ${{ secrets.DUNE_API_KEY }}
       run: |
         python fetch_badges.py
+      working-directory: ./ 
 
     - name: Commit and push changes
       env:
@@ -36,8 +40,6 @@ jobs:
       run: |
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
-        touch badge_data.json
         git add badge_data.json
         git commit -m 'Update badge data' || echo "Nothing to commit"
-        git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/mimika-code/scroll.git || echo "Push failed"
-
+        git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/mimika-code/Canvas.git || echo "Push failed"
