@@ -5231,7 +5231,23 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 </script>
+<script>
+let lastTimeActive = Date.now();
 
+window.addEventListener('focus', () => {
+    const currentTime = Date.now();
+    const timeSinceLastActive = currentTime - lastTimeActive;
+    
+    if (timeSinceLastActive > 3600000) {
+        location.reload();
+    }
+    
+    lastTimeActive = currentTime;
+});
+
+window.addEventListener('mousemove', () => lastTimeActive = Date.now());
+window.addEventListener('keydown', () => lastTimeActive = Date.now());
+</script>
 
 </html>
 </body>
